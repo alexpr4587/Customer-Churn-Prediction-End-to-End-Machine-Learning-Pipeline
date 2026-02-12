@@ -1,4 +1,4 @@
-## Customer Churn Prediction – End-to-End Machine Learning Pipeline
+## Customer Churn Prediction – End-to-End Machine Learning Prooject
 
 ## Overview
 
