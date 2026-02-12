@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # API (Backend)
+  churn-api:
+    build: .
+    container_name: churn_prediction_api
+    restart: unless-stopped
+    ports:
+      - "2000:8000"
+    environment:
+      - MODEL_PATH=churn_prediction_pipeline.pkl
+    networks:
+      - churn-network
+
+  # The Web (Frontend)
+  churn-ui:
+    build: .
+    container_name: churn_prediction_ui
+    command: streamlit run frontend.py --server.port 8501 --server.address 0.0.0.0
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://churn-api:8000
+    depends_on:
+      - churn-api
+    networks:
+      - churn-network
+
+networks:
+  churn-network:
+    driver: bridge
